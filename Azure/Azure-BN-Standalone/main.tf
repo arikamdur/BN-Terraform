@@ -2,7 +2,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "2.84.0"
+      version = "2.88.1"
     }
   }
 }
@@ -28,12 +28,12 @@ resource "azurerm_availability_set" "bn_aset" {
 
 # Generate random text for a unique storage account name
 resource "random_id" "randomId" {
-    keepers = {
-        # Generate a new ID only when a new resource group is defined
-        resource_group = azurerm_resource_group.rg.location
-    }
+  keepers = {
+    # Generate a new ID only when a new resource group is defined
+    resource_group = azurerm_resource_group.rg.location
+  }
 
-    byte_length = 2
+  byte_length = 2
 }
 
 # Create storage account for boot diagnostics
@@ -166,8 +166,7 @@ resource "azurerm_public_ip" "mgmt-pip" {
   name                = "mgmt-ip"
   location            = var.location
   resource_group_name = azurerm_resource_group.rg.name
-  allocation_method   = "Dynamic"
-  domain_name_label   = "bn1"
+  allocation_method   = "Static"
 }
 
 resource "azurerm_image" "bn_image" {
@@ -224,13 +223,8 @@ resource "azurerm_virtual_machine" "bn1" {
   }
 }
 
-data "azurerm_public_ip" "pip" {
-  name                = azurerm_public_ip.mgmt-pip.name
-  resource_group_name = azurerm_resource_group.rg.name
-}
-
 output "MGMT_url" {
-  value = "https://${data.azurerm_public_ip.pip.ip_address}/"
+  value = "https://${azurerm_public_ip.mgmt-pip.ip_address}/"
 }
 
 output "Public_ip_address" {

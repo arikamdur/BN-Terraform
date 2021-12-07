@@ -2,7 +2,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "2.84.0"
+      version = "2.88.1"
     }
   }
 }
@@ -201,16 +201,14 @@ resource "azurerm_public_ip" "mgmt-pip" {
   name                = "mgmt-ip"
   location            = var.location
   resource_group_name = azurerm_resource_group.rg.name
-  allocation_method   = "Dynamic"
-  domain_name_label   = "bn1"
+  allocation_method   = "Static"
 }
 
 resource "azurerm_public_ip" "sipp-pip" {
   name                = "sipp-pip"
   location            = var.location
   resource_group_name = azurerm_resource_group.rg.name
-  allocation_method   = "Dynamic"
-  domain_name_label   = "sipp1"
+  allocation_method   = "Static"
 }
 
 resource "azurerm_image" "bn_image" {
@@ -299,22 +297,12 @@ resource "azurerm_linux_virtual_machine" "sipp" {
 }
 
 
-data "azurerm_public_ip" "pip" {
-  name                = azurerm_public_ip.mgmt-pip.name
-  resource_group_name = azurerm_resource_group.rg.name
-}
-
 output "MGMT_url" {
-  value = "https://${data.azurerm_public_ip.pip.ip_address}/"
-}
-
-data "azurerm_public_ip" "sipp_pip" {
-  name                = azurerm_public_ip.sipp-pip.name
-  resource_group_name = azurerm_resource_group.rg.name
+  value = "https://${azurerm_public_ip.mgmt-pip.ip_address}/"
 }
 
 output "SIPP_IP" {
-  value = data.azurerm_public_ip.sipp_pip.ip_address
+  value = azurerm_public_ip.sipp-pip.ip_address
 }
 
 output "Public_ip_address" {

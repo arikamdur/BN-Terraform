@@ -9,12 +9,3 @@ os_disk        = "https://dcatalog1.blob.core.windows.net/public/dialogic-border
 data_disk      = "https://dcatalog1.blob.core.windows.net/public/dialogic-bordernet-3.9.1-170-disk2.vhd"
 sipp_username  = "sipp1"
 sipp_password  = "Dialogic123@@"
-
-region1_private_prefix = "10.10.1.0/24"
-region1_public_prefix  = "10.10.2.0/24"
-region1_mgmt_prefix    = "10.10.3.0/24"
-region2_private_prefix = "10.20.1.0/24"
-region2_public_prefix  = "10.20.2.0/24"
-region2_mgmt_prefix    = "10.20.3.0/24"
-region1                = "us-central1"
-region2                = "europe-west3"

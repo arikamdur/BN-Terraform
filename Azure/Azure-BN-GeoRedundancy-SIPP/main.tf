@@ -2,7 +2,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "2.86.0"
+      version = "2.88.1"
     }
   }
 }
@@ -350,24 +350,21 @@ resource "azurerm_public_ip" "region1_mgmt_pip" {
   name                = "region1-mgmt-ip"
   location            = var.region1
   resource_group_name = azurerm_resource_group.region1_rg.name
-  allocation_method   = "Dynamic"
-  domain_name_label   = "bn1"
+  allocation_method   = "Static"
 }
 
 resource "azurerm_public_ip" "region2_mgmt_pip" {
   name                = "region2-mgmt-ip"
   location            = var.region2
   resource_group_name = azurerm_resource_group.region2_rg.name
-  allocation_method   = "Dynamic"
-  domain_name_label   = "bn2"
+  allocation_method   = "Static"
 }
 
 resource "azurerm_public_ip" "sipp_pip" {
   name                = "sipp-pip"
   location            = var.region1
   resource_group_name = azurerm_resource_group.region1_rg.name
-  allocation_method   = "Dynamic"
-  domain_name_label   = "sipp1"
+  allocation_method   = "Static"
 }
 
 resource "azurerm_virtual_network_peering" "region1_peering" {
@@ -520,29 +517,15 @@ resource "azurerm_linux_virtual_machine" "sipp" {
 }
 
 
-data "azurerm_public_ip" "region1_pip" {
-  name                = azurerm_public_ip.region1_mgmt_pip.name
-  resource_group_name = azurerm_resource_group.region1_rg.name
-}
-
-data "azurerm_public_ip" "region2_pip" {
-  name                = azurerm_public_ip.region2_mgmt_pip.name
-  resource_group_name = azurerm_resource_group.region2_rg.name
-}
-
-data "azurerm_public_ip" "sipp_pip" {
-  name                = azurerm_public_ip.sipp_pip.name
-  resource_group_name = azurerm_resource_group.region1_rg.name
-}
 
 output "REGION1_BN_MGMT_IP" {
   description = "Contains the public IP address"
-  value       = "https://${data.azurerm_public_ip.region1_pip.ip_address}/"
+  value       = "https://${azurerm_public_ip.region1_mgmt_pip.ip_address}/"
 }
 
 output "REGION2_BN_MGMT_IP" {
   description = "Contains the public IP address"
-  value       = "https://${data.azurerm_public_ip.region2_pip.ip_address}/"
+  value       = "https://${azurerm_public_ip.region2_mgmt_pip.ip_address}/"
 }
 
 output "REGION1_BN_Private_Utility" {
@@ -557,5 +540,5 @@ output "REGION2_BN_Private_Utility" {
 
 output "SIPP_MGMT_IP" {
   description = "Contains the public IP address"
-  value       = data.azurerm_public_ip.sipp_pip.ip_address
+  value       = azurerm_public_ip.sipp_pip.ip_address
 }
