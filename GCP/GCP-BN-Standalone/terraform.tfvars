@@ -1,0 +1,8 @@
+private_prefix = "192.168.1.0/24"
+public_prefix  = "192.168.2.0/24"
+mgmt_prefix    = "192.168.3.0/24"
+region         = "us-central1"
+zone           = "us-central1-a"
+vm_size        = "e2-standard-4"
+os_disk        = "https://storage.googleapis.com/dpublic/bordernet-390298-boot-disk1.tar.gz"
+data_disk      = "https://storage.googleapis.com/dpublic/bordernet-390298-data-disk2.tar.gz"
