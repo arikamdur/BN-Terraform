@@ -27,7 +27,7 @@ The Following TF scripts are available :
     3.Geo Redundancy with SIPP<br>
 </td>
 <td>
-    1.Standalone2 <br>
+    1.Standalone <br>
     2.Standalone with SIPP<br>
     3.Geo Redundancy with SIPP<br>
  
