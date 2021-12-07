@@ -22,7 +22,7 @@ The Following TF scripts are available :
 7.Geo Redundancy with SIPP<br>  
 </td>
 <td>
-    1.Standalone <br>
+    1.Standalone<br>
     2.Standalone with SIPP<br>
     3.Geo Redundancy with SIPP<br>
 </td>
