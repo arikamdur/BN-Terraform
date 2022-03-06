@@ -1,0 +1,14 @@
+variable "address_space" {}
+variable "public_prefix" {}
+variable "private_prefix" {}
+variable "mgmt_prefix" {}
+variable "resource_group" {}
+variable "sipp_vm_names" {}
+variable "bn_vm_names" {}
+variable "location" {}
+variable "os_disk" {}
+variable "data_disk" {}
+variable "vm_size" {}
+variable "sipp_vm_size" {}
+variable "sipp_username" {}
+variable "sipp_password" {}

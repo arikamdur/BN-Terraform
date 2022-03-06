@@ -1,0 +1,14 @@
+address_space  = "192.168.0.0/16"
+private_prefix = "192.168.1.0/24"
+public_prefix  = "192.168.2.0/24"
+mgmt_prefix    = "192.168.3.0/24"
+resource_group = "rg-BN-Performance2"
+sipp_vm_names  = ["sipp1", "sipp2"]
+bn_vm_names    = ["bn1", "bn2"]
+location       = "eastus"
+vm_size        = "Standard_F8s_v2"
+sipp_vm_size   = "Standard_F2s_v2"
+os_disk        = "https://dcatalog1.blob.core.windows.net/public/dialogic-bordernet-3.9.1-170-disk1.vhd"
+data_disk      = "https://dcatalog1.blob.core.windows.net/public/dialogic-bordernet-3.9.1-170-disk2.vhd"
+sipp_username  = "sipp1"
+sipp_password  = "Dialogic123@@"
