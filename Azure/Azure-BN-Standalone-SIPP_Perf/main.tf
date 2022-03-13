@@ -121,10 +121,11 @@ resource "azurerm_network_interface" "mgmt_int" {
 }
 
 resource "azurerm_network_interface" "public_int" {
-  for_each            = toset(var.bn_vm_names)
-  name                = "${each.key}-Public"
-  location            = var.location
-  resource_group_name = azurerm_resource_group.rg.name
+  for_each                      = toset(var.bn_vm_names)
+  name                          = "${each.key}-Public"
+  location                      = var.location
+  resource_group_name           = azurerm_resource_group.rg.name
+  enable_accelerated_networking = "true"
 
   ip_configuration {
     name                          = "public_int_ipconfig"
@@ -134,10 +135,11 @@ resource "azurerm_network_interface" "public_int" {
 }
 
 resource "azurerm_network_interface" "sipp_public_int" {
-  for_each            = toset(var.sipp_vm_names)
-  name                = "${each.key}-Public"
-  location            = var.location
-  resource_group_name = azurerm_resource_group.rg.name
+  for_each                      = toset(var.sipp_vm_names)
+  name                          = "${each.key}-Public"
+  location                      = var.location
+  resource_group_name           = azurerm_resource_group.rg.name
+  enable_accelerated_networking = "true"
 
   ip_configuration {
     name                          = "sipp_public_int_ipconfig"
@@ -148,10 +150,11 @@ resource "azurerm_network_interface" "sipp_public_int" {
 }
 
 resource "azurerm_network_interface" "private_int" {
-  for_each            = toset(var.bn_vm_names)
-  name                = "${each.key}-Private"
-  location            = var.location
-  resource_group_name = azurerm_resource_group.rg.name
+  for_each                      = toset(var.bn_vm_names)
+  name                          = "${each.key}-Private"
+  location                      = var.location
+  resource_group_name           = azurerm_resource_group.rg.name
+  enable_accelerated_networking = "true"
 
   ip_configuration {
     name                          = "private_int_ipconfig"
@@ -161,10 +164,11 @@ resource "azurerm_network_interface" "private_int" {
 }
 
 resource "azurerm_network_interface" "sipp_private_int" {
-  for_each            = toset(var.sipp_vm_names)
-  name                = "${each.key}-Private"
-  location            = var.location
-  resource_group_name = azurerm_resource_group.rg.name
+  for_each                      = toset(var.sipp_vm_names)
+  name                          = "${each.key}-Private"
+  location                      = var.location
+  resource_group_name           = azurerm_resource_group.rg.name
+  enable_accelerated_networking = "true"
 
   ip_configuration {
     name                          = "sipp_private_int_ipconfig"
@@ -265,7 +269,7 @@ resource "azurerm_virtual_machine" "bn" {
   }
 
   os_profile {
-    computer_name  = "${each.key}"
+    computer_name  = each.key
     admin_username = "sysadmin"
     admin_password = "Dia10gic"
   }
