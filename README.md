@@ -16,10 +16,11 @@ The Following TF scripts are available :
 1.Standalone <br>
 2.Standalone with EMS<br>
 3.Standalone with SIPP<br>
-4.Standalone with EMS & SIPP<br>
-5.High Availability<br>  
-6.High Availability with SIPP for Scaling<br> 
-7.Geo Redundancy with SIPP<br>  
+4.Standalone with SIPP - Performance<br>
+5.Standalone with EMS & SIPP<br>
+6.High Availability<br>  
+7.High Availability with SIPP for Scaling<br> 
+8.Geo Redundancy with SIPP<br>  
 </td>
 <td>
     1.Standalone<br>
