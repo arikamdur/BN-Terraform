@@ -1,0 +1,12 @@
+private_prefix = "192.168.1.0/24"
+public_prefix  = "192.168.2.0/24"
+mgmt_prefix    = "192.168.3.0/24"
+sipp_vm_names  = ["sipp1", "sipp2"]
+bn_vm_names    = ["bn1", "bn2"]
+region         = "us-central1"
+bn_vm_size     = "e2-standard-4"
+sipp_vm_size   = "Standard_F2s_v2"
+os_disk        = "https://storage.googleapis.com/dpublic/bordernet-390298-boot-disk1.tar.gz"
+data_disk      = "https://storage.googleapis.com/dpublic/bordernet-390298-data-disk2.tar.gz"
+sipp_username  = "sipp1"
+sipp_password  = "Dialogic123@@"
