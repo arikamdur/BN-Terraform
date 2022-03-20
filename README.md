@@ -26,13 +26,14 @@ The Following TF scripts are available :
     1.Standalone<br>
     2.Standalone with EMS<br>
     3.Standalone with SIPP<br>
-    5.Standalone with SIPP - Performance<br>
+    4.Standalone with SIPP - Performance<br>
     5.Geo Redundancy with SIPP<br>
 </td>
 <td>
     1.Standalone <br>
     2.Standalone with SIPP<br>
-    3.Geo Redundancy with SIPP<br>
+    3.Standalone with SIPP - Performance<br>
+    4.Geo Redundancy with SIPP<br>
  
 </td>
  </tr>
