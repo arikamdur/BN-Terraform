@@ -11,11 +11,10 @@ provider "google" {
   credentials     = "account.json" ## create service account from GCP Console and download JSON key
   project         = "bordernet"
   region          = var.region
-  zone            = var.zone
   request_timeout = "10m"
 }
 
-
+data "google_compute_zones" "available_zones" {}
 
 # # Create a Virtual Network
 resource "google_compute_network" "mgmt_network" {
@@ -137,7 +136,7 @@ resource "google_compute_image" "bn_data_image" {
 resource "google_compute_disk" "bn_os_disk" {
   name                      = "bn-os-disk"
   type                      = "pd-ssd"
-  zone                      = var.zone
+  zone                      = data.google_compute_zones.available_zones.names[0]
   image                     = google_compute_image.bn_os_image.id
   physical_block_size_bytes = 4096
 }
@@ -145,7 +144,7 @@ resource "google_compute_disk" "bn_os_disk" {
 resource "google_compute_disk" "bn_data_disk" {
   name                      = "bn-data-disk"
   type                      = "pd-ssd"
-  zone                      = var.zone
+  zone                      = data.google_compute_zones.available_zones.names[0]
   image                     = google_compute_image.bn_data_image.id
   physical_block_size_bytes = 4096
 }
@@ -153,7 +152,7 @@ resource "google_compute_disk" "bn_data_disk" {
 resource "google_compute_instance" "bn1" {
   name         = "bn1"
   machine_type = var.vm_size
-  zone         = var.zone
+  zone         = data.google_compute_zones.available_zones.names[0]
 
   boot_disk {
     source = google_compute_disk.bn_os_disk.id
@@ -178,7 +177,7 @@ resource "google_compute_instance" "bn1" {
 resource "google_compute_instance" "sipp" {
   name         = "sipp"
   machine_type = "t2d-standard-1"
-  zone         = var.zone
+  zone         = data.google_compute_zones.available_zones.names[0]
 
 
   boot_disk {
@@ -225,6 +224,14 @@ resource "google_compute_instance" "sipp" {
 
 output "MGMT_url" {
   value = "https://${google_compute_address.bn-pip.address}/"
+}
+
+output "Public_ip_address" {
+  value = google_compute_instance.bn1.network_interface.1.network_ip
+}
+
+output "Private_ip_address" {
+  value = google_compute_instance.bn1.network_interface.2.network_ip
 }
 
 output "SIPP" {
