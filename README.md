@@ -9,6 +9,7 @@ The Following TF scripts are available :
     <td><b style="font-size:30px">AWS</b></td>
     <td><b style="font-size:30px">Azure</b></td>
     <td><b style="font-size:30px">GCP</b></td>
+    <td><b style="font-size:30px">Oracle</b></td>
 
  </tr>
  <tr>
@@ -34,6 +35,10 @@ The Following TF scripts are available :
     2.Standalone with SIPP<br>
     3.Standalone with SIPP - Performance<br>
     4.Geo Redundancy with SIPP<br>
+ 
+</td>
+<td>
+    1.Standalone <br>
  
 </td>
  </tr>
