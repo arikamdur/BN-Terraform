@@ -1,4 +1,4 @@
 
-# Deploying GeoRedundant BorderNet on 2 different Regions using Terraform 
+# Deploying GeoRedundant BorderNet using Terraform 
 
-### This TF script will deploy Stand Alone BorderNet including VNET 
+### This TF script will deploy 2 BorderNets on 2 different Regions 
