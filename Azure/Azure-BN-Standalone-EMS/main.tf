@@ -2,7 +2,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "2.94.0"
+      version = "3.15.0"
     }
   }
 }
@@ -100,6 +100,18 @@ resource "azurerm_network_security_group" "bn-sg" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "22"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+
+ security_rule {
+    name                       = "BNEMS-Mgmt"
+    priority                   = 102
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "8443"
     source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
