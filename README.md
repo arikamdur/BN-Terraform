@@ -28,7 +28,9 @@ The Following TF scripts are available :
     2.Standalone with EMS<br>
     3.Standalone with SIPP<br>
     4.Standalone with SIPP - Performance<br>
-    5.Geo Redundancy with SIPP<br>
+    5.Standalone with SIPP - Teams<br>
+    6.Geo Redundancy with SIPP<br>
+    7.Geo Redundancy with LB & SIPP<br>
 </td>
 <td>
     1.Standalone <br>
