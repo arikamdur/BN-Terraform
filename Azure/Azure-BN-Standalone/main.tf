@@ -2,7 +2,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "2.94.0"
+      version = "3.16.0"
     }
   }
 }
@@ -194,9 +194,10 @@ resource "azurerm_virtual_machine" "bn1" {
   resource_group_name = azurerm_resource_group.rg.name
   vm_size             = var.vm_size
 
-  network_interface_ids         = ["${azurerm_network_interface.mgmt_int.id}", "${azurerm_network_interface.public_int.id}", "${azurerm_network_interface.private_int.id}"]
-  primary_network_interface_id  = azurerm_network_interface.mgmt_int.id
-  delete_os_disk_on_termination = "true"
+  network_interface_ids            = ["${azurerm_network_interface.mgmt_int.id}", "${azurerm_network_interface.public_int.id}", "${azurerm_network_interface.private_int.id}"]
+  primary_network_interface_id     = azurerm_network_interface.mgmt_int.id
+  delete_os_disk_on_termination    = true
+  delete_data_disks_on_termination = true
 
   storage_image_reference {
     id = azurerm_image.bn_image.id
