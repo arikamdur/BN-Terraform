@@ -234,12 +234,6 @@ resource "google_compute_instance" "ems" {
       nat_ip = google_compute_address.ems-pip.address
     }
   }
-  network_interface {
-    subnetwork = google_compute_subnetwork.public.id
-  }
-  network_interface {
-    subnetwork = google_compute_subnetwork.private.id
-  }
 }
 
 
