@@ -7,4 +7,4 @@ Private Subnet
 MGMT Subnet
 security_group
 
-You are required to update variables with id of some of these resources.
+Update existing aws resource id's in file terraform.tfvars before running the script.
