@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Licenses xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="Licenses.xsd">
+<License>
+	<InstallationKey>DIALOGIC_VBNET</InstallationKey>
+	<PlatformId>DIALOGIC_VBNET</PlatformId>
+	<LicenseType>TRIAL</LicenseType>
+	<LicenseString>JQCXMPC97987EVZI6ZAKVAVIYSE35WK6KYFZZAD3K9273SC9FY56R425MQ7IVFDAGR34HH2HBRKFT3FBC528XPDUZVWQNV59GVNKBBTSMFZMPGKKE6MH74CRKFU5TKF6</LicenseString>
+	<ExpirationDate>2023-03-31</ExpirationDate>
+	<ReleaseVersion>3.9.1</ReleaseVersion>
+	<SignatureValue>HMZSW22QI9X2N6RIJUTUKXX2X7YGY2WVMC82PZKQIK4B35URMTFA</SignatureValue>
+	<LicenseDetail
+		SESSIONS="32000"
+		PROTOCOL_1="SIP"
+		PROTOCOL_2="H323"
+		TRACING="Enabled"
+		HW_ACCEL="Disabled"
+		HA="Disabled"
+		SDR="Enabled"
+		IPV6="Enabled"
+		IPSEC_TUNNELS="32000"
+		TGW_SESSIONS="2000"
+		WB_AUDIO="Enabled"
+		SIP_I="Enabled"
+		EXT_BWD="Disabled"
+		EXT_LI="Enabled"
+		EXT_MGMT="Disabled"
+		EXT_PS="Disabled"
+		ANALYTICS="Enabled"
+		SIPREC_SERVICE_SESSIONS="100"
+		DIAMETER="Enabled"
+		MSTEAMS="Enabled"
+		SHAKEN="Enabled"
+		CONNECTION_LOST_GRACE="0"
+		HOST_1="ANY"
+		EXPIRED_DATE="2023-03-31"
+		SRTP_SESSIONS="32000"
+	/>
+</License>
+</Licenses>

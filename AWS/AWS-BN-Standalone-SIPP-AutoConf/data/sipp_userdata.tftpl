@@ -1,0 +1,71 @@
+#!/bin/bash
+sudo su
+
+touch /tmp/testfile.txt
+ping -c1 -W1 -q google.com &>/dev/null
+status=`echo $?`
+while [ $status -gt 0 ]; do
+       sleep 5
+	   echo "waiting for internet connectivity" >> /tmp/testfile.txt
+       ping -c1 -W1 -q google.com &>/dev/null
+       status=`echo $?`
+   done
+
+yum install -y cmake gcc gcc-c++ ncurses ncurses-devel openssl libnet libpcap libpcap-devel gsl gsl-devel 
+sed -i "s/.*PasswordAuthentication.*/PasswordAuthentication yes/g" /etc/ssh/sshd_config
+sudo service sshd restart
+echo "ec2-user:sipp123" | chpasswd
+cd /root
+wget https://github.com/SIPp/sipp/releases/download/v3.6.1/sipp-3.6.1.tar.gz
+tar -xzvf sipp-3.6.1.tar.gz
+cd sipp-3.6.1
+./build.sh --common
+echo PATH=$PATH:/root/sipp-3.6.1/ >> /etc/profile
+
+#Install screen to run sipp in background
+yum install -y screen
+
+
+#Insert sipp public and pvt ip in script for creating peers
+echo "${Pub_Peer_IP}" >> /tmp/testfile.txt
+echo "${Pvt_Peer_IP}" >> /tmp/testfile.txt
+echo "${BN_Pub_IP}" >> /tmp/testfile.txt
+
+echo 'screen -S uas1 -d -m  ./sipp -stf uas1.stat -trace_stat -error_file uas1.err -trace_err -trace_screen -screen_file uas1.screen -t u1 -p 5060 -i ${Pvt_Peer_IP} -sn uas -default_behaviors abortunexp' >> /tmp/testfile.txt
+
+echo "screen -S uac1 -d -m ./sipp -t u1 -stf uac1.stat -trace_stat -error_file uac1.err -trace_err -trace_screen  -screen_file uac1.screen -p 5060 -i ${Pub_Peer_IP}  -r 1 -d 5000 -s 9876543210 -sn uac ${BN_Pub_IP}:5060" >> /tmp/testfile.txt
+
+# UAS
+
+  screen -S uas1 -d -m \
+  ./sipp -stf uas1.stat -trace_stat -error_file uas1.err \
+    -trace_err -trace_screen -screen_file uas1.screen \
+    -t u1 -p 5060 -i "${Pvt_Peer_IP}" -sn uas \
+    -default_behaviors abortunexp
+	
+# UAC
+
+  screen -S uac1 -d -m \
+  ./sipp -t u1 -stf uac1.stat -trace_stat \
+    -error_file uac1.err -trace_err -trace_screen \
+    -screen_file uac1.screen -p 5060 -i "${Pub_Peer_IP}"  \
+    -r 1 -d 5000 -s 9876543210 \
+    -sn uac "${BN_Pub_IP}":5060
+	
+
+# UAStest
+
+  screen -S uas1 -d -m \
+  ./sipp -stf uas1.stat -trace_stat -error_file uas1.err \
+    -trace_err -trace_screen -screen_file uas1.screen \
+    -t u1 -p 5060 -i ${Pvt_Peer_IP} -sn uas \
+    -default_behaviors abortunexp
+	
+# UACtest
+
+  screen -S uac1 -d -m \
+  ./sipp -t u1 -stf uac1.stat -trace_stat \
+    -error_file uac1.err -trace_err -trace_screen \
+    -screen_file uac1.screen -p 5060 -i ${Pub_Peer_IP}  \
+    -r 1 -d 5000 -s 9876543210 \
+    -sn uac ${BN_Pub_IP}:5060
