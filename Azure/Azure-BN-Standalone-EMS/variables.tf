@@ -4,10 +4,10 @@ variable "private_prefix" {}
 variable "mgmt_prefix" {}
 variable "resource_group" {}
 variable "location" {}
-variable "bn_os_disk" {}
-variable "bn_data_disk" {}
-variable "ems_os_disk" {}
-variable "ems_data_disk" {}
+variable "bn_version" {}
+variable "bn_build" {}
+variable "ems_version" {}
+variable "ems_build" {}
 variable "vm_size" {}
 
 

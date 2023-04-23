@@ -6,8 +6,8 @@ variable "resource_group" {}
 variable "sipp_vm_names" {}
 variable "bn_vm_names" {}
 variable "location" {}
-variable "os_disk" {}
-variable "data_disk" {}
+variable "bn_version" {}
+variable "bn_build" {}
 variable "vm_size" {}
 variable "sipp_vm_size" {}
 variable "sipp_username" {}

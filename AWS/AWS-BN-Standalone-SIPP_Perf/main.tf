@@ -240,7 +240,7 @@ resource "aws_eip" "sipp_eip_assign" {
 
 resource "aws_instance" "bn1" {
   for_each            = toset(var.bn_vm_names)
-  ami                  = data.aws_ami.bn_version.id
+  ami                  = "ami-0e75737b73123fe55"
   instance_type        = var.bn_instance_type
   iam_instance_profile = aws_iam_instance_profile.ec2_iam_instance_profile.name
   network_interface {

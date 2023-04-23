@@ -4,8 +4,8 @@ variable "private_prefix" {}
 variable "mgmt_prefix" {}
 variable "resource_group" {}
 variable "location" {}
-variable "os_disk" {}
-variable "data_disk" {}
+variable "bn_version" {}
+variable "bn_build" {}
 variable "vm_size" {}
 
 

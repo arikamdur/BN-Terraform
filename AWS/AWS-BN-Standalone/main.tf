@@ -2,7 +2,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 3.74.0"
+      version = "~> 3.74"
     }
   }
 }
@@ -207,7 +207,7 @@ resource "aws_eip" "eip_assign" {
 }
 
 resource "aws_instance" "bn1" {
-  ami                  = data.aws_ami.bn_version.id
+  ami                  = "ami-05177ac64ccc2da7e"
   instance_type        = var.instance_type
   iam_instance_profile = aws_iam_instance_profile.ec2_iam_instance_profile.name
   network_interface {

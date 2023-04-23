@@ -2,7 +2,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "3.16.0"
+      version = "3.50.0"
     }
   }
 }
@@ -55,6 +55,13 @@ resource "random_id" "region2_randomId" {
   }
 
   byte_length = 2
+}
+
+data "azurerm_shared_image_version" "bn_image" {
+  name                = var.bn_build
+  image_name          = var.bn_version
+  gallery_name        = "dialogic_gallery_uscentral"
+  resource_group_name = "devops-uscentral"
 }
 
 # Create storage account for boot diagnostics
@@ -381,38 +388,6 @@ resource "azurerm_virtual_network_peering" "region2_peering" {
   remote_virtual_network_id = azurerm_virtual_network.region1_vnet.id
 }
 
-resource "azurerm_image" "region1_bn_image" {
-  name                = "region1-bn-image"
-  location            = var.region1
-  resource_group_name = azurerm_resource_group.region1_rg.name
-
-  os_disk {
-    os_type  = "Linux"
-    os_state = "Generalized"
-    blob_uri = var.region1_os_disk
-  }
-  data_disk {
-    lun      = "0"
-    blob_uri = var.region1_data_disk
-  }
-}
-
-resource "azurerm_image" "region2_bn_image" {
-  name                = "region2-bn-image"
-  location            = var.region2
-  resource_group_name = azurerm_resource_group.region2_rg.name
-
-  os_disk {
-    os_type  = "Linux"
-    os_state = "Generalized"
-    blob_uri = var.region2_os_disk
-  }
-  data_disk {
-    lun      = "0"
-    blob_uri = var.region2_data_disk
-  }
-}
-
 resource "azurerm_virtual_machine" "region1_bn" {
   name                = "Region1-Enghouse-BorderNet-SBC"
   location            = var.region1
@@ -420,13 +395,13 @@ resource "azurerm_virtual_machine" "region1_bn" {
   resource_group_name = azurerm_resource_group.region1_rg.name
   vm_size             = var.vm_size
 
-  network_interface_ids         = ["${azurerm_network_interface.region1_mgmt_int.id}", "${azurerm_network_interface.region1_public_int.id}", "${azurerm_network_interface.region1_private_int.id}"]
-  primary_network_interface_id  = azurerm_network_interface.region1_mgmt_int.id
-  delete_os_disk_on_termination = true
+  network_interface_ids            = ["${azurerm_network_interface.region1_mgmt_int.id}", "${azurerm_network_interface.region1_public_int.id}", "${azurerm_network_interface.region1_private_int.id}"]
+  primary_network_interface_id     = azurerm_network_interface.region1_mgmt_int.id
+  delete_os_disk_on_termination    = true
   delete_data_disks_on_termination = true
 
   storage_image_reference {
-    id = azurerm_image.region1_bn_image.id
+    id = data.azurerm_shared_image_version.bn_image.id
   }
 
   storage_os_disk {
@@ -457,13 +432,13 @@ resource "azurerm_virtual_machine" "region2_bn" {
   resource_group_name = azurerm_resource_group.region2_rg.name
   vm_size             = var.vm_size
 
-  network_interface_ids         = ["${azurerm_network_interface.region2_mgmt_int.id}", "${azurerm_network_interface.region2_public_int.id}", "${azurerm_network_interface.region2_private_int.id}"]
-  primary_network_interface_id  = azurerm_network_interface.region2_mgmt_int.id
-  delete_os_disk_on_termination = true
+  network_interface_ids            = ["${azurerm_network_interface.region2_mgmt_int.id}", "${azurerm_network_interface.region2_public_int.id}", "${azurerm_network_interface.region2_private_int.id}"]
+  primary_network_interface_id     = azurerm_network_interface.region2_mgmt_int.id
+  delete_os_disk_on_termination    = true
   delete_data_disks_on_termination = true
 
   storage_image_reference {
-    id = azurerm_image.region2_bn_image.id
+    id = data.azurerm_shared_image_version.bn_image.id
   }
 
   storage_os_disk {

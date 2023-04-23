@@ -248,7 +248,7 @@ resource "aws_eip" "eip_vip" {
 }
 
 resource "aws_instance" "bn1" {
-  ami                  = data.aws_ami.bn_version.id
+  ami                  = "ami-05862efd9a72abc78"
   instance_type        = var.bn_instance_type
   iam_instance_profile = aws_iam_instance_profile.ec2_iam_instance_profile.name
   network_interface {
@@ -272,7 +272,7 @@ resource "aws_instance" "bn1" {
 }
 
 resource "aws_instance" "bn2" {
-  ami                  = data.aws_ami.bn_version.id
+  ami                  = "ami-0e4b140dd1de759e4"
   instance_type        = var.bn_instance_type
   iam_instance_profile = aws_iam_instance_profile.ec2_iam_instance_profile.name
   network_interface {

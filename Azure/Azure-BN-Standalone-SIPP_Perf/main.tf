@@ -2,7 +2,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "3.16.0"
+      version = "3.50.0"
     }
   }
 }
@@ -34,6 +34,13 @@ resource "random_id" "randomId" {
   }
 
   byte_length = 2
+}
+
+data "azurerm_shared_image_version" "bn_image" {
+  name                = var.bn_build
+  image_name          = var.bn_version
+  gallery_name        = "dialogic_gallery_uscentral"
+  resource_group_name = "devops-uscentral"
 }
 
 # Create storage account for boot diagnostics
@@ -139,7 +146,7 @@ resource "azurerm_network_interface" "sipp_public_int" {
   name                          = "${each.key}-Public"
   location                      = var.location
   resource_group_name           = azurerm_resource_group.rg.name
-  enable_accelerated_networking = "true"
+  enable_accelerated_networking = "false"
 
   ip_configuration {
     name                          = "sipp_public_int_ipconfig"
@@ -154,7 +161,7 @@ resource "azurerm_network_interface" "private_int" {
   name                          = "${each.key}-Private"
   location                      = var.location
   resource_group_name           = azurerm_resource_group.rg.name
-  enable_accelerated_networking = "true"
+  enable_accelerated_networking = "false"
 
   ip_configuration {
     name                          = "private_int_ipconfig"
@@ -227,23 +234,6 @@ resource "azurerm_public_ip" "sipp-pip" {
   allocation_method   = "Static"
 }
 
-resource "azurerm_image" "bn_image" {
-  name                = "bn_image"
-  location            = var.location
-  resource_group_name = azurerm_resource_group.rg.name
-
-  os_disk {
-    os_type  = "Linux"
-    os_state = "Generalized"
-    blob_uri = var.os_disk
-  }
-  data_disk {
-    lun      = "0"
-    blob_uri = var.data_disk
-  }
-
-
-}
 
 resource "azurerm_virtual_machine" "bn" {
   for_each            = toset(var.bn_vm_names)
@@ -260,7 +250,7 @@ resource "azurerm_virtual_machine" "bn" {
 
 
   storage_image_reference {
-    id = azurerm_image.bn_image.id
+    id = data.azurerm_shared_image_version.bn_image.id
   }
 
   storage_os_disk {
