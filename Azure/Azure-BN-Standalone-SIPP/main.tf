@@ -2,7 +2,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "3.50.0"
+      version = "3.53.0"
     }
   }
 }
@@ -10,7 +10,6 @@ terraform {
 provider "azurerm" {
   features {}
 }
-
 
 # First we'll create a resource group. In Azure every resource belongs to a 
 # resource group. Think of it as a container to hold all your resources. 
@@ -35,13 +34,6 @@ resource "random_id" "randomId" {
   }
 
   byte_length = 2
-}
-
-data "azurerm_shared_image_version" "bn_image" {
-  name                = var.bn_build
-  image_name          = var.bn_version
-  gallery_name        = "dialogic_gallery_uscentral"
-  resource_group_name = "devops-uscentral"
 }
 
 # Create storage account for boot diagnostics
@@ -219,6 +211,24 @@ resource "azurerm_public_ip" "sipp-pip" {
   allocation_method   = "Static"
 }
 
+resource "azurerm_image" "bn_image" {
+  name                = "bn_image"
+  location            = var.location
+  resource_group_name = azurerm_resource_group.rg.name
+
+  os_disk {
+    os_type  = "Linux"
+    os_state = "Generalized"
+    blob_uri = var.os_disk
+  }
+  data_disk {
+    lun      = "0"
+    blob_uri = var.data_disk
+  }
+
+
+}
+
 resource "azurerm_virtual_machine" "bn1" {
   name                = "Enghouse-BorderNet-SBC"
   location            = var.location
@@ -226,13 +236,12 @@ resource "azurerm_virtual_machine" "bn1" {
   resource_group_name = azurerm_resource_group.rg.name
   vm_size             = var.vm_size
 
-  network_interface_ids            = ["${azurerm_network_interface.mgmt_int.id}", "${azurerm_network_interface.public_int.id}", "${azurerm_network_interface.private_int.id}"]
-  primary_network_interface_id     = azurerm_network_interface.mgmt_int.id
-  delete_os_disk_on_termination    = true
-  delete_data_disks_on_termination = true
+  network_interface_ids         = ["${azurerm_network_interface.mgmt_int.id}", "${azurerm_network_interface.public_int.id}", "${azurerm_network_interface.private_int.id}"]
+  primary_network_interface_id  = azurerm_network_interface.mgmt_int.id
+  delete_os_disk_on_termination = "true"
 
   storage_image_reference {
-    id = data.azurerm_shared_image_version.bn_image.id
+    id = azurerm_image.bn_image.id
   }
 
   storage_os_disk {
@@ -303,5 +312,3 @@ output "Public_ip_address" {
 output "Private_ip_address" {
   value = azurerm_network_interface.private_int.private_ip_address
 }
-
-

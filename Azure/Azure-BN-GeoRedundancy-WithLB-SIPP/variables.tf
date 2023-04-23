@@ -4,8 +4,8 @@ variable "private_prefix" {}
 variable "mgmt_prefix" {}
 variable "resource_group" {}
 variable "location" {}
-variable "bn_version" {}
-variable "bn_build" {}
+variable "os_disk" {}
+variable "data_disk" {}
 variable "vm_size" {}
 variable "sipp_username" {}
 variable "sipp_password" {}

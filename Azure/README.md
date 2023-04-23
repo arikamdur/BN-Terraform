@@ -2,10 +2,6 @@
 
 run "az login" to Authenticate with Azure
 
-If 2FA is set on your account , use the following command :
-
-az login --scope https://graph.microsoft.com/.default
-
 ### Zones
 
 | Internal terraform notation | Azure CLI name | Region name |
