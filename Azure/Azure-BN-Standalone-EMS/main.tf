@@ -2,7 +2,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "3.16.0"
+      version = "3.53.0"
     }
   }
 }
@@ -104,7 +104,7 @@ resource "azurerm_network_security_group" "bn-sg" {
     destination_address_prefix = "*"
   }
 
-  security_rule {
+ security_rule {
     name                       = "BNEMS-Mgmt"
     priority                   = 102
     direction                  = "Inbound"
@@ -245,10 +245,9 @@ resource "azurerm_virtual_machine" "bn1" {
   resource_group_name = azurerm_resource_group.rg.name
   vm_size             = var.vm_size
 
-  network_interface_ids            = ["${azurerm_network_interface.bn_mgmt_int.id}", "${azurerm_network_interface.bn_public_int.id}", "${azurerm_network_interface.bn_private_int.id}"]
-  primary_network_interface_id     = azurerm_network_interface.bn_mgmt_int.id
-  delete_os_disk_on_termination    = true
-  delete_data_disks_on_termination = true
+  network_interface_ids         = ["${azurerm_network_interface.bn_mgmt_int.id}", "${azurerm_network_interface.bn_public_int.id}", "${azurerm_network_interface.bn_private_int.id}"]
+  primary_network_interface_id  = azurerm_network_interface.bn_mgmt_int.id
+  delete_os_disk_on_termination = "true"
 
   storage_image_reference {
     id = azurerm_image.bn_image.id

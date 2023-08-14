@@ -6,5 +6,5 @@ bn_instance_type   = "c5.large"
 sipp_instance_type = "t2.micro"
 region             = "us-east-1"
 bn_version         = "3.9.1"
-sipp_vm_names      = ["sipp1", "sipp2"]
-bn_vm_names        = ["bn1", "bn2"]
+sipp_vm_names      = ["sipp1"]
+bn_vm_names        = ["bn1", "bn2","bn3"]
