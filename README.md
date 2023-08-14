@@ -22,6 +22,7 @@ The Following TF scripts are available :
 6.High Availability<br>  
 7.High Availability with SIPP for Scaling<br> 
 8.Geo Redundancy with SIPP<br>  
+9.AWS-BN-Standalone-ExistingVPC<br>
 </td>
 <td>
     1.Standalone<br>

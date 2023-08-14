@@ -1,0 +1,19 @@
+#! /bin/bash
+touch /tmp/testfile.txt
+#Insert sipp public and pvt ip in script for creating peers
+echo "${Pub_Peer_IP}" > /tmp/testfile.txt
+echo "${Pvt_Peer_IP}" >> /tmp/testfile.txt
+echo "${variable1}" >> /tmp/testfile.txt
+
+
+
+sed -i "5i Pub_Peer_IP=${Pub_Peer_IP}" /tmp/autoConf/autoConfScripts/basic_config.sh
+sed -i "6i Pvt_Peer_IP=${Pvt_Peer_IP}" /tmp/autoConf/autoConfScripts/basic_config.sh
+
+#Run autodeploy
+chmod +x /tmp/autoConf/autoDeploy.sh
+/tmp/autoConf/autoDeploy.sh
+
+#Deploy and go for reboot
+/opt/bnet/scripts/bnetdeploy -file /var/adm/bnet/.deploymentdata
+

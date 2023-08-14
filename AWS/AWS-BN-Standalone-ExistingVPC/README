@@ -1,0 +1,10 @@
+Use this script to create a bordernet in existing vpc. Script assumes you already have following resources created.
+VPC
+Internet Gateway
+Public Route Table
+Public Subnet
+Private Subnet
+MGMT Subnet
+security_group
+
+Update existing aws resource id's in file terraform.tfvars before running the script.
